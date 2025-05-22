@@ -13,7 +13,8 @@ class Song extends Model
 
     protected $fillable = [
         'title',
-        'artist'
+        'artist',
+        'album_id'
     ];
     public function album(): BelongsTo
     {

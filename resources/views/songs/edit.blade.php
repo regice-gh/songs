@@ -29,6 +29,22 @@
                 @enderror
             </div>
 
+            <div class="p-1">
+                <label for="album_id" class="block text-sm font-medium text-gray-700">Album</label>
+                <select name="album_id" id="album_id" 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <option value="">Select an album (optional)</option>
+                    @foreach($albums as $album)
+                        <option value="{{ $album->id }}" {{ old('album_id', $song->album_id) == $album->id ? 'selected' : '' }}>
+                            {{ $album->name }} by {{ $album->band->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('album_id')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div class="flex justify-end space-x-4">
                 <a href="{{ route('song.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition duration-200">
                     Cancel

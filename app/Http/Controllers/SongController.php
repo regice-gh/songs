@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\Album;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreSongRequest;
 use App\Http\Requests\UpdateSongRequest;
 
@@ -13,7 +15,7 @@ class SongController extends Controller
      */
     public function index()
     {
-        $songs = Song::all();     
+        $songs = Song::with('album')->get();
         return view('songs.index', compact('songs'));
     }
 
@@ -22,21 +24,25 @@ class SongController extends Controller
      */
     public function create()
     {
-        return view('songs.create');
+        $albums = Album::all();
+        return view('songs.create', compact('albums'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSongRequest $request)
+    public function store(Request $request)
     {
-        Song::create($request->validate(
-            [
-                'title' => 'required|string|max:100',
-                'artist' => 'required|string|max:100',
-            ]
-        ));
-        return redirect()->route('song.index')->with('success', 'Song created successfully!');
+        $validated = $request->validate([
+            'title' => 'required|string|max:100',
+            'artist' => 'required|string|max:100',
+            'album_id' => 'nullable|exists:albums,id'
+        ]);
+
+        Song::create($validated);
+
+        return redirect()->route('song.index')
+            ->with('success', 'Song created successfully.');
     }
 
     /**
@@ -44,6 +50,7 @@ class SongController extends Controller
      */
     public function show(Song $song)
     {
+        $song->load('album.band');
         return view('songs.song', compact('song'));
     }
 
@@ -52,21 +59,25 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        return view('songs.edit', compact('song'));
+        $albums = Album::all();
+        return view('songs.edit', compact('song', 'albums'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSongRequest $request, Song $song)
+    public function update(Request $request, Song $song)
     {
-        $song->update($request->validate(
-            [
-                'title' => 'required|string|max:100',
-                'artist' => 'required|string|max:100',
-            ]
-        ));
-        return redirect()->route('song.index')->with('success', 'Song updated successfully!');
+        $validated = $request->validate([
+            'title' => 'required|string|max:100',
+            'artist' => 'required|string|max:100',
+            'album_id' => 'nullable|exists:albums,id'
+        ]);
+
+        $song->update($validated);
+
+        return redirect()->route('song.index')
+            ->with('success', 'Song updated successfully.');
     }
 
     /**
@@ -75,6 +86,8 @@ class SongController extends Controller
     public function destroy(Song $song)
     {
         $song->delete();
-        return redirect()->route('song.index')->with('success', 'Song deleted successfully!');
+
+        return redirect()->route('song.index')
+            ->with('success', 'Song deleted successfully.');
     }
 }

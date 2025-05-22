@@ -14,6 +14,17 @@
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('song.index') }}" class="text-xl font-bold text-gray-800 p-4">🎵 Song Manager </a>
                     </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="{{ route('song.index') }}" class="{{ request()->routeIs('song.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Songs
+                        </a>
+                        <a href="{{ route('band.index') }}" class="{{ request()->routeIs('band.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Bands
+                        </a>
+                        <a href="{{ route('album.index') }}" class="{{ request()->routeIs('album.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Albums
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

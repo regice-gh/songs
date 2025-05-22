@@ -10,12 +10,10 @@ class Band extends Model
     protected $table = 'band';
     protected $fillable = [
         'name',
-        'genre',
-        'formation_year',
-        'band_id',
+        'description'
     ];
 
-    public function Album(): HasMany
+    public function albums(): HasMany
     {
         return $this->hasMany(Album::class);
     }

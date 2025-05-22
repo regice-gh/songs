@@ -13,14 +13,18 @@ class Album extends Model
     protected $fillable = [
         'name',
         'release_date',
-        'timer_sold',
-        'band_id',
+        'band_id'
+    ];
+
+    protected $casts = [
+        'release_date' => 'date'
     ];
 
     public function band(): BelongsTo
     {
         return $this->belongsTo(Band::class);
     }
+
     public function songs(): HasMany
     {
         return $this->hasMany(Song::class);

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\BandController;
+use App\Http\Controllers\AlbumController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -23,5 +25,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('song', SongController::class);
+Route::resource('band', BandController::class);
+Route::resource('album', AlbumController::class);
 
 require __DIR__.'/auth.php';

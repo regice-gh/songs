@@ -13,10 +13,18 @@ class SongSeeder extends Seeder
      */
     public function run(): void
     {
+        // Get album IDs for reference
+        $beatlesAlbumId = DB::table('album')->whereIn('name', ['Hey Jude'])->first()->id;
+        $blackEyedPeasAlbumId = DB::table('album')->whereIn('name', ['The E.N.D.'])->first()->id;
+        $walkTheMoonAlbumId = DB::table('album')->whereIn('name', ['Talking Is Hard'])->first()->id;
+        $koolAndGangAlbumId = DB::table('album')->whereIn('name', ['Celebration!'])->first()->id;
+        $lmfaoAlbumId = DB::table('album')->whereIn('name', ['Sorry for Party Rocking'])->first()->id;
+
         $songs = [
             [
                 'title' => 'Happy',
                 'artist' => 'Pharrell Williams',
+                'album_id' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -35,24 +43,28 @@ class SongSeeder extends Seeder
             [
                 'title' => 'Celebration',
                 'artist' => 'Kool & The Gang',
+                'album_id' => $koolAndGangAlbumId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'title' => 'I Gotta Feeling',
                 'artist' => 'The Black Eyed Peas',
+                'album_id' => $blackEyedPeasAlbumId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'title' => 'Party Rock Anthem',
                 'artist' => 'LMFAO',
+                'album_id' => $lmfaoAlbumId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'title' => 'Shut Up and Dance',
                 'artist' => 'Walk the Moon',
+                'album_id' => $walkTheMoonAlbumId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -71,6 +83,7 @@ class SongSeeder extends Seeder
             [
                 'title' => 'Hey Jude',
                 'artist' => 'The Beatles',
+                'album_id' => $beatlesAlbumId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

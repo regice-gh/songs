@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement()->primary();
             $table->string('title', 100);
             $table->string('artist', 100);
-            $table->foreignId('album_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('album_id')->unsigned()->nullable()->index();
             $table->timestamps();
         });
     }
